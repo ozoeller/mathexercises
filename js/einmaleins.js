@@ -205,7 +205,7 @@ function onClickRecapOfWrongCalculations(event) {
 function onSolutionFieldInputChanged(event) {
   // Feedback-Angabe löschen, wenn der Benutzer beginnt, etwas einzugeben
   // Dazu wird ein Unicode-Non-Breaking-Space eingefügt (&nbsp;)
-  setNewTextById("feedbackDiv", "\xA0");
+  setNewTextById("feedbackDiv", "🤔");
 }
 
 window.onload = function() {
