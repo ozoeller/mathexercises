@@ -19,20 +19,6 @@ function toggleElementVisibility(el) {
   setElementVisible(el, !isElementVisible(el));
 }
 
-function calcResult(calcText) {
-  var tokens = calcText.split(" ");
-  var num1 = parseInt(tokens[0]);
-  var num2 = parseInt(tokens[2]);
-  return num1 * num2;
-}
-
-function createNextCalculation() {
-  var randNum1 = Math.floor(Math.random() * 10) + 1;
-  var randNum2 = Math.floor(Math.random() * 10) + 1;
-  numSolution = randNum1 * randNum2;
-  return randNum1 + " × " + randNum2;
-}
-
 function getNextCalcOfWrongList() {
   var ul = document.getElementById("listWrong");
 
@@ -125,12 +111,13 @@ function handleSolutionInput() {
 
   var numSolutionInput = parseInt(document.getElementById("solution").value); // richtig
 
+  var ul = document.getElementById("listWrong");
+
   if (numSolutionInput === numSolution) { // correct
     // Emojiis: "https://emojipedia.org/"
     setNewTextById("feedbackDiv", "😀");
     setNewTextById("sumRight", ++numCountRight);
 
-    var ul = document.getElementById("listWrong");
 
     if (mode === 1) {
       // Remove last selected 'li'-element
