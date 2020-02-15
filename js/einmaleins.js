@@ -19,14 +19,14 @@ function toggleElementVisibility(el) {
   setElementVisible(el, !isElementVisible(el));
 }
 
-function getResult(calcText) {
+function calcResult(calcText) {
   var tokens = calcText.split(" ");
   var num1 = parseInt(tokens[0]);
   var num2 = parseInt(tokens[2]);
   return num1 * num2;
 }
 
-function createMultiplyString() {
+function createNextCalculation() {
   var randNum1 = Math.floor(Math.random() * 10) + 1;
   var randNum2 = Math.floor(Math.random() * 10) + 1;
   numSolution = randNum1 * randNum2;
@@ -46,12 +46,12 @@ function getNextCalcOfWrongList() {
     // Set selected-class
     liArr[randNodeNum].classList.add("selected");
     var calcText = liArr[randNodeNum].textContent;
-    numSolution = getResult(calcText);
+    numSolution = calcResult(calcText);
     return calcText;
   } // else: switch back to mode 0 (random calculations)
 
   mode = 0;
-  return createMultiplyString();
+  return createNextCalculation();
 }
 
 function removeAllChildNodes(node) {
@@ -79,7 +79,7 @@ function setFocusToSolution() {
 
 function getNextCalculationString() {
   if (mode === 0) {
-    return createMultiplyString();
+    return createNextCalculation();
   } else {
     return getNextCalcOfWrongList();
   }
@@ -222,6 +222,6 @@ window.onload = function() {
     .getElementById("solution")
     .addEventListener("input", onSolutionFieldInputChanged);
   toggleElementVisibility(document.getElementById("wrongContainer"));
-  setNewTextById("calcString", createMultiplyString());
+  setNewTextById("calcString", createNextCalculation());
   setFocusToSolution();
 };
