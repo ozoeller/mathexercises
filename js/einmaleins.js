@@ -5,7 +5,7 @@ var numCountRight = 0;
 var numCountFalse = 0;
 var startTime = 0;
 var startTimeCalc = 0;
-var mode = 0; // 0: normale Zufallsberechnung, 1: Wiederholung von falschen Berechnungen
+var mode = 0; // 0: Random calculations, 1: Repetition of wrong calculations
 
 function setElementVisible(el, boolean) {
   if (boolean) {
@@ -34,14 +34,16 @@ function createMultiplyString() {
 }
 
 function getNextCalcOfWrongList() {
-  var ul = document.getElementById("listWrong"); // Randomly select a new 'li'-element
+  var ul = document.getElementById("listWrong");
 
+  // Randomly select a new 'li'-element
   var liArr = ul.getElementsByTagName("li");
   var length = liArr.length;
 
   if (length > 0) {
-    var randNodeNum = Math.floor(Math.random() * length); // Set selected-class
+    var randNodeNum = Math.floor(Math.random() * length);
 
+    // Set selected-class
     liArr[randNodeNum].classList.add("selected");
     var calcText = liArr[randNodeNum].textContent;
     numSolution = getResult(calcText);
@@ -123,38 +125,38 @@ function handleSolutionInput() {
 
   var numSolutionInput = parseInt(document.getElementById("solution").value); // richtig
 
-  if (numSolutionInput === numSolution) {
-    // Emojiis siehe "https://emojipedia.org/"
+  if (numSolutionInput === numSolution) { // correct
+    // Emojiis: "https://emojipedia.org/"
     setNewTextById("feedbackDiv", "😀");
     setNewTextById("sumRight", ++numCountRight);
 
+    var ul = document.getElementById("listWrong");
+
     if (mode === 1) {
-      var ul = document.getElementById("listWrong"); // Remove last selected 'li'-element
-
+      // Remove last selected 'li'-element
       removeLastSelectedListElement(ul);
-      var liWrongCount = ul.getElementsByTagName("li").length; // Disable visibility of wrong-list
 
+      var liWrongCount = ul.getElementsByTagName("li").length;
+
+      // Disable visibility of wrong-list
       if (liWrongCount === 0) {
         toggleElementVisibility(document.getElementById("wrongContainer"));
       }
     }
-  } else {
-    // falsch
+  } else { // wrong
     setNewTextById("feedbackDiv", "😖");
     setNewTextById("sumWrong", ++numCountFalse);
     var calcString = document.getElementById("calcString").textContent;
 
-    var _ul = document.getElementById("listWrong");
-
     if (mode === 1) {
       // Remove last selected 'li'-element
-      removeLastSelectedListElement(_ul);
+      removeLastSelectedListElement(ul);
     }
 
     var li = document.createElement("li");
     var span = document.createElement("span");
 
-    _ul.appendChild(li);
+    ul.appendChild(li);
 
     li.appendChild(span);
     span.appendChild(document.createTextNode(calcString));
@@ -193,7 +195,7 @@ function changeToPracticeMode() {
 }
 
 function onClickSubmit(event) {
-  // verhindert das Absenden
+  // Prevent submit to remote server
   event.preventDefault();
   handleSolutionInput();
 }
@@ -203,8 +205,7 @@ function onClickRecapOfWrongCalculations(event) {
 }
 
 function onSolutionFieldInputChanged(event) {
-  // Feedback-Angabe löschen, wenn der Benutzer beginnt, etwas einzugeben
-  // Dazu wird ein Unicode-Non-Breaking-Space eingefügt (&nbsp;)
+  // Insert "thinking face"-emoji while typing. Alternative: "&nbsp;"?
   setNewTextById("feedbackDiv", "🤔");
 }
 
